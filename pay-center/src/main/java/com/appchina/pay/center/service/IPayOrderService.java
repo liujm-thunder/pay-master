@@ -1,6 +1,7 @@
 package com.appchina.pay.center.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.appchina.pay.dao.model.PayOrder;
 
 import java.util.Map;
 
@@ -29,6 +30,11 @@ public interface IPayOrderService {
 
     String doWxPayReq(String tradeType, JSONObject payOrder, String resKey);
 
+    String doWxPayRequest(String tradeType, JSONObject payOrder, String resKey);
+
     String doAliPayReq(String channelId, JSONObject payOrder, String resKey);
 
+    String queryWxPayOrderRequest(PayOrder payOrder,String resKey);
+
+    PayOrder queryPayOrderByPayOrderId(String payOrderId);
 }

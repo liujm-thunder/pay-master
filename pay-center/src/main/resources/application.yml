@@ -1,11 +1,11 @@
 server:
-  port: 3020
+  port: 8080
 
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://172.16.30.25:3306/mproduction?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
+    url: jdbc:mysql://172.16.30.25:3306/appchina_pay?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false
     username: mproduction
     password: 16021incloud
     initialSize: 5    # 初始化大小
@@ -42,11 +42,11 @@ spring:
 
 config:
   ali:
-    notify_url: http://api.xxpay.org/notify/pay/aliPayNotifyRes.htm
-    return_url: http://www.xxpay.org
+    notify_url: http://103.231.68.185:8080/alipay/notify
+    return_url: http://103.231.68.185:8080
   wx:
-    certRootPath: /home/xxpay/service/cert
-    notifyUrl: http://api.xxpay.org/notify/pay/wxPayNotifyRes.htm
+    certRootPath: /Users/liujianmeng/Downloads/
+    notifyUrl: http://103.231.68.185:8080/wechat/notify
 
 logging:
-  file: ./log/xxpay4spring-boot.log
+  file: ./log/pay-center.log

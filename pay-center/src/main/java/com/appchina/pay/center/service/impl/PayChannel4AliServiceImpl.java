@@ -38,7 +38,7 @@ import java.util.Map;
 @Service
 public class PayChannel4AliServiceImpl extends BaseService implements IPayChannel4AliService {
 
-    private static final MyLog _log = MyLog.getLog(PayChannel4AliServiceImpl.class);
+    private static final MyLog log = MyLog.getLog(PayChannel4AliServiceImpl.class);
 
     @Autowired
     private AlipayConfig alipayConfig;
@@ -49,13 +49,13 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
         if (ObjectValidUtil.isInvalid(bizParamMap)) {
-            _log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
+            log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_NOT_FOUND);
         }
         JSONObject payOrderObj = baseParam.isNullValue("payOrder") ? null : JSONObject.parseObject(bizParamMap.get("payOrder").toString());
         PayOrder payOrder = BeanConvertUtils.map2Bean(payOrderObj, PayOrder.class);
         if (ObjectValidUtil.isInvalid(payOrder)) {
-            _log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
+            log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_INVALID);
         }
         String payOrderId = payOrder.getPayOrderId();
@@ -81,7 +81,7 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
                     model.setQuitUrl(objParamsJson.getString("quit_url"));
                 }
             } catch (Exception e) {
-                _log.error("{}objParams参数格式错误！", logPrefix);
+                log.error("{}objParams参数格式错误！", logPrefix);
             }
         }
         alipay_request.setBizModel(model);
@@ -95,10 +95,10 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        _log.info("{}生成跳转路径：payUrl={}", logPrefix, payUrl);
+        log.info("{}生成跳转路径：payUrl={}", logPrefix, payUrl);
         super.baseUpdateStatus4Ing(payOrderId, null);
-        _log.info("{}生成请求支付宝数据,req={}", logPrefix, alipay_request.getBizModel());
-        _log.info("###### 商户统一下单处理完成 ######");
+        log.info("{}生成请求支付宝数据,req={}", logPrefix, alipay_request.getBizModel());
+        log.info("###### 商户统一下单处理完成 ######");
         Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
         map.put("payOrderId", payOrderId);
         map.put("payUrl", payUrl);
@@ -111,13 +111,13 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
         if (ObjectValidUtil.isInvalid(bizParamMap)) {
-            _log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
+            log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_NOT_FOUND);
         }
         JSONObject payOrderObj = baseParam.isNullValue("payOrder") ? null : JSONObject.parseObject(bizParamMap.get("payOrder").toString());
         PayOrder payOrder = BeanConvertUtils.map2Bean(payOrderObj, PayOrder.class);
         if (ObjectValidUtil.isInvalid(payOrder)) {
-            _log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
+            log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_INVALID);
         }
         String payOrderId = payOrder.getPayOrderId();
@@ -144,7 +144,7 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
                 qr_pay_mode = ObjectUtils.toString(objParamsJson.getString("qr_pay_mode"), "2");
                 qrcode_width = ObjectUtils.toString(objParamsJson.getString("qrcode_width"), "200");
             } catch (Exception e) {
-                _log.error("{}objParams参数格式错误！", logPrefix);
+                log.error("{}objParams参数格式错误！", logPrefix);
             }
         }
         model.setQrPayMode(qr_pay_mode);
@@ -160,10 +160,10 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        _log.info("{}生成跳转路径：payUrl={}", logPrefix, payUrl);
+        log.info("{}生成跳转路径：payUrl={}", logPrefix, payUrl);
         super.baseUpdateStatus4Ing(payOrderId, null);
-        _log.info("{}生成请求支付宝数据,req={}", logPrefix, alipay_request.getBizModel());
-        _log.info("###### 商户统一下单处理完成 ######");
+        log.info("{}生成请求支付宝数据,req={}", logPrefix, alipay_request.getBizModel());
+        log.info("###### 商户统一下单处理完成 ######");
         Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
         map.put("payOrderId", payOrderId);
         map.put("payUrl", payUrl);
@@ -176,13 +176,13 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
         if (ObjectValidUtil.isInvalid(bizParamMap)) {
-            _log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
+            log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_NOT_FOUND);
         }
         JSONObject payOrderObj = baseParam.isNullValue("payOrder") ? null : JSONObject.parseObject(bizParamMap.get("payOrder").toString());
         PayOrder payOrder = BeanConvertUtils.map2Bean(payOrderObj, PayOrder.class);
         if (ObjectValidUtil.isInvalid(payOrder)) {
-            _log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
+            log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_INVALID);
         }
         String payOrderId = payOrder.getPayOrderId();
@@ -211,8 +211,8 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
             e.printStackTrace();
         }
         super.baseUpdateStatus4Ing(payOrderId, null);
-        _log.info("{}生成请求支付宝数据,payParams={}", logPrefix, payParams);
-        _log.info("###### 商户统一下单处理完成 ######");
+        log.info("{}生成请求支付宝数据,payParams={}", logPrefix, payParams);
+        log.info("###### 商户统一下单处理完成 ######");
         Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
         map.put("payOrderId", payOrderId);
         map.put("payParams", payParams);
@@ -225,13 +225,13 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
         if (ObjectValidUtil.isInvalid(bizParamMap)) {
-            _log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
+            log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_NOT_FOUND);
         }
         JSONObject payOrderObj = baseParam.isNullValue("payOrder") ? null : JSONObject.parseObject(bizParamMap.get("payOrder").toString());
         PayOrder payOrder = BeanConvertUtils.map2Bean(payOrderObj, PayOrder.class);
         if (ObjectValidUtil.isInvalid(payOrder)) {
-            _log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
+            log.warn("{}失败, {}. jsonParam={}", logPrefix, RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_INVALID);
         }
         String payOrderId = payOrder.getPayOrderId();
@@ -261,7 +261,7 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
                     model.setUndiscountableAmount(objParamsJson.getString("undiscountable_amount"));
                 }
             } catch (Exception e) {
-                _log.error("{}objParams参数格式错误！", logPrefix);
+                log.error("{}objParams参数格式错误！", logPrefix);
             }
         }
         alipay_request.setBizModel(model);
@@ -275,10 +275,10 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         } catch (AlipayApiException e) {
             e.printStackTrace();
         }
-        _log.info("{}生成跳转路径：payUrl={}", logPrefix, payUrl);
+        log.info("{}生成跳转路径：payUrl={}", logPrefix, payUrl);
         super.baseUpdateStatus4Ing(payOrderId, null);
-        _log.info("{}生成请求支付宝数据,req={}", logPrefix, alipay_request.getBizModel());
-        _log.info("###### 商户统一下单处理完成 ######");
+        log.info("{}生成请求支付宝数据,req={}", logPrefix, alipay_request.getBizModel());
+        log.info("###### 商户统一下单处理完成 ######");
         Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
         map.put("payOrderId", payOrderId);
         map.put("payUrl", payUrl);

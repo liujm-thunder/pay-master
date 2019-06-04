@@ -4,6 +4,7 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.appchina.pay.center.service.INotifyPayService;
 import com.appchina.pay.center.service.Notify4BasePay;
+import com.appchina.pay.center.service.PreOrderService;
 import com.appchina.pay.center.service.channel.alipay.AlipayConfig;
 import com.appchina.pay.center.service.channel.wechat.WxPayUtil;
 import com.appchina.pay.common.constant.PayConstant;
@@ -13,6 +14,7 @@ import com.appchina.pay.common.util.JsonUtil;
 import com.appchina.pay.common.util.MyLog;
 import com.appchina.pay.common.util.ObjectValidUtil;
 import com.appchina.pay.common.util.RpcUtil;
+import com.appchina.pay.dao.model.GoodsOrder;
 import com.appchina.pay.dao.model.PayChannel;
 import com.appchina.pay.dao.model.PayOrder;
 import com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponse;
@@ -33,7 +35,7 @@ import java.util.Map;
 @Service
 public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPayService {
 
-    private static final MyLog _log = MyLog.getLog(NotifyPayServiceImpl.class);
+    private static final MyLog log = MyLog.getLog(NotifyPayServiceImpl.class);
 
     @Autowired
     private AlipayConfig alipayConfig;
@@ -41,16 +43,16 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
     @Override
     public Map doAliPayNotify(String jsonParam) {
         String logPrefix = "【处理支付宝支付回调】";
-        _log.info("====== 开始处理支付宝支付回调通知 ======");
+        log.info("====== 开始处理支付宝支付回调通知 ======");
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
         if (ObjectValidUtil.isInvalid(bizParamMap)) {
-            _log.warn("处理支付宝支付回调失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
+            log.warn("处理支付宝支付回调失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_NOT_FOUND);
         }
         Map params = baseParam.isNullValue("params") ? null : (Map) bizParamMap.get("params");
         if (ObjectValidUtil.isInvalid(params)) {
-            _log.warn("处理支付宝支付回调失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
+            log.warn("处理支付宝支付回调失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_INVALID);
         }
         Map<String, Object> payContext = new HashMap<>();
@@ -59,7 +61,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         if(!verifyAliPayParams(payContext)) {
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_BIZ_PAY_NOTIFY_VERIFY_FAIL);
         }
-        _log.info("{}验证支付通知数据及签名通过", logPrefix);
+        log.info("{}验证支付通知数据及签名通过", logPrefix);
         String trade_status = String.valueOf(params.get("trade_status"));	// 交易状态
         String trade_no = String.valueOf(params.get("trade_no"));			// 渠道订单号
         // 支付状态成功或者完成
@@ -69,42 +71,42 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
             payOrder = (PayOrder)payContext.get("payOrder");
             byte payStatus = payOrder.getStatus(); // 0：订单生成，1：支付中，-1：支付失败，2：支付成功，3：业务处理完成，-2：订单过期
             if (payStatus != PayConstant.PAY_STATUS_SUCCESS && payStatus != PayConstant.PAY_STATUS_COMPLETE) {
-                updatePayOrderRows = super.baseUpdateStatus4Success(payOrder.getPayOrderId(), trade_no);
+                updatePayOrderRows = super.baseUpdateStatus4Success(payOrder.getPayOrderId(), trade_no,null,null,null);
                 if (updatePayOrderRows != 1) {
-                    _log.error("{}更新支付状态失败,将payOrderId={},更新payStatus={}失败", logPrefix, payOrder.getPayOrderId(), PayConstant.PAY_STATUS_SUCCESS);
-                    _log.info("{}响应给支付宝结果：{}", logPrefix, PayConstant.RETURN_ALIPAY_VALUE_FAIL);
+                    log.error("{}更新支付状态失败,将payOrderId={},更新payStatus={}失败", logPrefix, payOrder.getPayOrderId(), PayConstant.PAY_STATUS_SUCCESS);
+                    log.info("{}响应给支付宝结果：{}", logPrefix, PayConstant.RETURN_ALIPAY_VALUE_FAIL);
                     return RpcUtil.createBizResult(baseParam, PayConstant.RETURN_ALIPAY_VALUE_FAIL);
                 }
-                _log.info("{}更新支付状态成功,将payOrderId={},更新payStatus={}成功", logPrefix, payOrder.getPayOrderId(), PayConstant.PAY_STATUS_SUCCESS);
+                log.info("{}更新支付状态成功,将payOrderId={},更新payStatus={}成功", logPrefix, payOrder.getPayOrderId(), PayConstant.PAY_STATUS_SUCCESS);
                 payOrder.setStatus(PayConstant.PAY_STATUS_SUCCESS);
                 payOrder.setChannelOrderNo(trade_no);
             }
         }else{
             // 其他状态
-            _log.info("{}支付状态trade_status={},不做业务处理", logPrefix, trade_status);
-            _log.info("{}响应给支付宝结果：{}", logPrefix, PayConstant.RETURN_ALIPAY_VALUE_SUCCESS);
+            log.info("{}支付状态trade_status={},不做业务处理", logPrefix, trade_status);
+            log.info("{}响应给支付宝结果：{}", logPrefix, PayConstant.RETURN_ALIPAY_VALUE_SUCCESS);
             return RpcUtil.createBizResult(baseParam, PayConstant.RETURN_ALIPAY_VALUE_SUCCESS);
         }
-        doNotify(payOrder);
-        _log.info("====== 完成处理支付宝支付回调通知 ======");
+//        doNotify(payOrder);
+        log.info("====== 完成处理支付宝支付回调通知 ======");
         return RpcUtil.createBizResult(baseParam, PayConstant.RETURN_ALIPAY_VALUE_SUCCESS);
     }
 
     @Override
     public Map doWxPayNotify(String jsonParam) {
         String logPrefix = "【处理微信支付回调】";
-        _log.info("====== 开始处理微信支付回调通知 ======");
+        log.info("====== 开始处理微信支付回调通知 ======");
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         try {
             Map<String, Object> bizParamMap = baseParam.getBizParamMap();
             if (ObjectValidUtil.isInvalid(bizParamMap)) {
-                _log.warn("处理微信支付回调失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
+                log.warn("处理微信支付回调失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
                 return RpcUtil.createBizResult(baseParam, WxPayNotifyResponse.fail(RetEnum.RET_PARAM_NOT_FOUND.getMessage()));
                 //return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_NOT_FOUND);
             }
             String xmlResult = baseParam.isNullValue("xmlResult") ? null : bizParamMap.get("xmlResult").toString();
             if (ObjectValidUtil.isInvalid(xmlResult)) {
-                _log.warn("处理微信支付回调失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
+                log.warn("处理微信支付回调失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
                 return RpcUtil.createBizResult(baseParam, WxPayNotifyResponse.fail(RetEnum.RET_PARAM_INVALID.getMessage()));
                 //return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_INVALID);
             }
@@ -124,28 +126,30 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
             // 处理订单
             byte payStatus = payOrder.getStatus(); // 0：订单生成，1：支付中，-1：支付失败，2：支付成功，3：业务处理完成，-2：订单过期
             if (payStatus != PayConstant.PAY_STATUS_SUCCESS && payStatus != PayConstant.PAY_STATUS_COMPLETE) {
-                int updatePayOrderRows = super.baseUpdateStatus4Success(payOrder.getPayOrderId(), result.getTransactionId());
-                if (updatePayOrderRows != 1) {
-                    _log.error("{}更新支付状态失败,将payOrderId={},更新payStatus={}失败", logPrefix, payOrder.getPayOrderId(), PayConstant.PAY_STATUS_SUCCESS);
-                    return RpcUtil.createBizResult(baseParam, WxPayNotifyResponse.fail("处理订单失败"));
+                if (result.getResultCode().equalsIgnoreCase("SUCCESS")){
+                    int updatePayOrderRows = super.baseUpdateStatus4Success(payOrder.getPayOrderId(), result.getTransactionId(),null,null,null);
+                    if (updatePayOrderRows != 1) {
+                        log.error("{}更新支付状态失败,将payOrderId={},更新payStatus={}失败", logPrefix, payOrder.getPayOrderId(), PayConstant.PAY_STATUS_SUCCESS);
+                        return RpcUtil.createBizResult(baseParam, WxPayNotifyResponse.fail("处理订单失败"));
+                    }
+                    log.info("{}更新支付状态成功,将payOrderId={},更新payStatus={}成功", logPrefix, payOrder.getPayOrderId(), PayConstant.PAY_STATUS_SUCCESS);
+                    payOrder.setStatus(PayConstant.PAY_STATUS_SUCCESS);
+                    payOrder.setChannelOrderNo(result.getTransactionId());
                 }
-                _log.error("{}更新支付状态成功,将payOrderId={},更新payStatus={}成功", logPrefix, payOrder.getPayOrderId(), PayConstant.PAY_STATUS_SUCCESS);
-                payOrder.setStatus(PayConstant.PAY_STATUS_SUCCESS);
-                payOrder.setChannelOrderNo(result.getTransactionId());
             }
             // 业务系统后端通知
-            doNotify(payOrder);
-            _log.info("====== 完成处理微信支付回调通知 ======");
+//          doNotify(payOrder);
+            log.info("====== 完成处理微信支付回调通知 ======");
             return RpcUtil.createBizResult(baseParam, WxPayNotifyResponse.success("OK"));
         } catch (WxPayException e) {
             //出现业务错误
-            _log.error(e, "微信回调结果异常,异常原因");
-            _log.info("{}请求数据result_code=FAIL", logPrefix);
-            _log.info("err_code:", e.getErrCode());
-            _log.info("err_code_des:", e.getErrCodeDes());
+            log.error(e, "微信回调结果异常,异常原因");
+            log.info("{}请求数据result_code=FAIL", logPrefix);
+            log.info("err_code:", e.getErrCode());
+            log.info("err_code_des:", e.getErrCodeDes());
             return RpcUtil.createBizResult(baseParam, WxPayNotifyResponse.fail(e.getMessage()));
         } catch (Exception e) {
-            _log.error(e, "微信回调结果异常,异常原因");
+            log.error(e, "微信回调结果异常,异常原因");
             return RpcUtil.createBizResult(baseParam, WxPayNotifyResponse.fail(e.getMessage()));
         }
     }
@@ -155,12 +159,12 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
         if (ObjectValidUtil.isInvalid(bizParamMap)) {
-            _log.warn("发送业务支付通知失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
+            log.warn("发送业务支付通知失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_NOT_FOUND);
         }
         String payOrderId = baseParam.isNullValue("payOrderId") ? null : bizParamMap.get("payOrderId").toString();
         if(ObjectValidUtil.isInvalid(payOrderId)) {
-            _log.warn("发送业务支付通知失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
+            log.warn("发送业务支付通知失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_INVALID);
         }
         PayOrder payOrder = super.baseSelectPayOrder(payOrderId);
@@ -184,12 +188,12 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         String out_trade_no = params.get("out_trade_no");		// 商户订单号
         String total_amount = params.get("total_amount"); 		// 支付金额
         if (StringUtils.isEmpty(out_trade_no)) {
-            _log.error("AliPay Notify parameter out_trade_no is empty. out_trade_no={}", out_trade_no);
+            log.error("AliPay Notify parameter out_trade_no is empty. out_trade_no={}", out_trade_no);
             payContext.put("retMsg", "out_trade_no is empty");
             return false;
         }
         if (StringUtils.isEmpty(total_amount)) {
-            _log.error("AliPay Notify parameter total_amount is empty. total_fee={}", total_amount);
+            log.error("AliPay Notify parameter total_amount is empty. total_fee={}", total_amount);
             payContext.put("retMsg", "total_amount is empty");
             return false;
         }
@@ -198,7 +202,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         String payOrderId = out_trade_no;
         PayOrder payOrder = super.baseSelectPayOrder(payOrderId);
         if (payOrder == null) {
-            _log.error("Can't found payOrder form db. payOrderId={}, ", payOrderId);
+            log.error("Can't found payOrder form db. payOrderId={}, ", payOrderId);
             payContext.put("retMsg", "Can't found payOrder");
             return false;
         }
@@ -207,7 +211,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         String channelId = payOrder.getChannelId();
         PayChannel payChannel = super.baseSelectPayChannel(mchId, channelId);
         if(payChannel == null) {
-            _log.error("Can't found payChannel form db. mchId={} channelId={}, ", payOrderId, mchId, channelId);
+            log.error("Can't found payChannel form db. mchId={} channelId={}, ", payOrderId, mchId, channelId);
             payContext.put("retMsg", "Can't found payChannel");
             return false;
         }
@@ -215,13 +219,13 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         try {
             verify_result = AlipaySignature.rsaCheckV1(params, alipayConfig.init(payChannel.getParam()).getAlipay_public_key(), AlipayConfig.CHARSET, "RSA2");
         } catch (AlipayApiException e) {
-            _log.error(e, "AlipaySignature.rsaCheckV1 error");
+            log.error(e, "AlipaySignature.rsaCheckV1 error");
         }
 
         // 验证签名
         if (!verify_result) {
             errorMessage = "rsaCheckV1 failed.";
-            _log.error("AliPay Notify parameter {}", errorMessage);
+            log.error("AliPay Notify parameter {}", errorMessage);
             payContext.put("retMsg", errorMessage);
             return false;
         }
@@ -230,7 +234,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         long aliPayAmt = new BigDecimal(total_amount).movePointRight(2).longValue();
         long dbPayAmt = payOrder.getAmount().longValue();
         if (dbPayAmt != aliPayAmt) {
-            _log.error("db payOrder record payPrice not equals total_amount. total_amount={},payOrderId={}", total_amount, payOrderId);
+            log.error("db payOrder record payPrice not equals total_amount. total_amount={},payOrderId={}", total_amount, payOrderId);
             payContext.put("retMsg", "");
             return false;
         }
@@ -248,7 +252,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         //校验结果是否成功
         if (!PayConstant.RETURN_VALUE_SUCCESS.equalsIgnoreCase(params.getResultCode())
                 && !PayConstant.RETURN_VALUE_SUCCESS.equalsIgnoreCase(params.getReturnCode())) {
-            _log.error("returnCode={},resultCode={},errCode={},errCodeDes={}", params.getReturnCode(), params.getResultCode(), params.getErrCode(), params.getErrCodeDes());
+            log.error("returnCode={},resultCode={},errCode={},errCodeDes={}", params.getReturnCode(), params.getResultCode(), params.getErrCode(), params.getErrCodeDes());
             payContext.put("retMsg", "notify data failed");
             return false;
         }
@@ -260,7 +264,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         String payOrderId = out_trade_no;
         PayOrder payOrder = super.baseSelectPayOrder(payOrderId);
         if (payOrder==null) {
-            _log.error("Can't found payOrder form db. payOrderId={}, ", payOrderId);
+            log.error("Can't found payOrder form db. payOrderId={}, ", payOrderId);
             payContext.put("retMsg", "Can't found payOrder");
             return false;
         }
@@ -270,7 +274,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         String channelId = payOrder.getChannelId();
         PayChannel payChannel = super.baseSelectPayChannel(mchId, channelId);
         if(payChannel == null) {
-            _log.error("Can't found payChannel form db. mchId={} channelId={}, ", payOrderId, mchId, channelId);
+            log.error("Can't found payChannel form db. mchId={} channelId={}, ", payOrderId, mchId, channelId);
             payContext.put("retMsg", "Can't found payChannel");
             return false;
         }
@@ -280,7 +284,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         long wxPayAmt = new BigDecimal(total_fee).longValue();
         long dbPayAmt = payOrder.getAmount().longValue();
         if (dbPayAmt != wxPayAmt) {
-            _log.error("db payOrder record payPrice not equals total_fee. total_fee={},payOrderId={}", total_fee, payOrderId);
+            log.error("db payOrder record payPrice not equals total_fee. total_fee={},payOrderId={}", total_fee, payOrderId);
             payContext.put("retMsg", "total_fee is not the same");
             return false;
         }

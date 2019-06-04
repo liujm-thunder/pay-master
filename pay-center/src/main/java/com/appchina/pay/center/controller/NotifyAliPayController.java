@@ -17,15 +17,11 @@ import java.util.Map;
 
 /**
  * @Description: 接收处理支付宝通知
- * @author dingzhiwei jmdhappy@126.com
- * @date 2017-07-05
- * @version V1.0
- * @Copyright: www.xxpay.org
  */
 @RestController
-public class Notify4AliPayController {
+public class NotifyAliPayController {
 
-	private static final MyLog _log = MyLog.getLog(Notify4AliPayController.class);
+	private static final MyLog log = MyLog.getLog(NotifyAliPayController.class);
 
 	@Autowired
 	private INotifyPayService notifyPayService;
@@ -37,13 +33,13 @@ public class Notify4AliPayController {
 	 * @throws ServletException
 	 * @throws IOException
      */
-	@RequestMapping(value = "/notify/pay/aliPayNotifyRes.htm")
+	@RequestMapping(value = "/alipay/notify")
 	@ResponseBody
 	public String aliPayNotifyRes(HttpServletRequest request) throws ServletException, IOException {
-		_log.info("====== 开始接收支付宝支付回调通知 ======");
+		log.info("====== 开始接收支付宝支付回调通知 ======");
 		String notifyRes = doAliPayRes(request);
-		_log.info("响应给支付宝:{}", notifyRes);
-		_log.info("====== 完成接收支付宝支付回调通知 ======");
+		log.info("响应给支付宝:{}", notifyRes);
+		log.info("====== 完成接收支付宝支付回调通知 ======");
 		return notifyRes;
 	}
 
@@ -64,9 +60,9 @@ public class Notify4AliPayController {
 			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
 			params.put(name, valueStr);
 		}
-		_log.info("{}通知请求数据:reqStr={}", logPrefix, params);
+		log.info("{}通知请求数据:reqStr={}", logPrefix, params);
 		if(params.isEmpty()) {
-			_log.error("{}请求参数为空", logPrefix);
+			log.error("{}请求参数为空", logPrefix);
 			return PayConstant.RETURN_ALIPAY_VALUE_FAIL;
 		}
 		return notifyPayService.handleAliPayNotify(params);

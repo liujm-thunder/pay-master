@@ -17,9 +17,9 @@ import java.io.IOException;
  * @Description: 接收处理微信通知
  */
 @RestController
-public class Notify4WxPayController {
+public class NotifyWxPayController {
 
-	private static final MyLog _log = MyLog.getLog(Notify4WxPayController.class);
+	private static final MyLog log = MyLog.getLog(NotifyWxPayController.class);
 
 	@Autowired
 	private INotifyPayService notifyPayService;
@@ -31,20 +31,20 @@ public class Notify4WxPayController {
 	 * @throws ServletException
 	 * @throws IOException
      */
-	@RequestMapping("/notify/pay/wxPayNotifyRes.htm")
+	@RequestMapping("/wechat/notify")
 	@ResponseBody
 	public String wxPayNotifyRes(HttpServletRequest request) throws ServletException, IOException {
-		_log.info("====== 开始接收微信支付回调通知 ======");
+		log.info("====== 开始接收微信支付回调通知 ======");
 		String notifyRes = doWxPayRes(request);
-		_log.info("响应给微信:{}", notifyRes);
-		_log.info("====== 完成接收微信支付回调通知 ======");
+		log.info("响应给微信:{}", notifyRes);
+		log.info("====== 完成接收微信支付回调通知 ======");
 		return notifyRes;
 	}
 
 	public String doWxPayRes(HttpServletRequest request) throws ServletException, IOException {
 		String logPrefix = "【微信支付回调通知】";
 		String xmlResult = IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
-		_log.info("{}通知请求数据:reqStr={}", logPrefix, xmlResult);
+		log.info("{}通知请求数据:reqStr={}", logPrefix, xmlResult);
 		return notifyPayService.handleWxPayNotify(xmlResult);
 	}
 

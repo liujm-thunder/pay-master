@@ -20,19 +20,19 @@ import java.util.Map;
 @Service
 public class MchInfoServiceImpl extends BaseService implements IMchInfoService {
 
-    private static final MyLog _log = MyLog.getLog(MchInfoServiceImpl.class);
+    private static final MyLog log = MyLog.getLog(MchInfoServiceImpl.class);
 
     @Override
     public Map selectMchInfo(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
         if (ObjectValidUtil.isInvalid(bizParamMap)) {
-            _log.warn("查询商户信息失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
+            log.warn("查询商户信息失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_NOT_FOUND);
         }
         String mchId = baseParam.isNullValue("mchId") ? null : bizParamMap.get("mchId").toString();
         if (ObjectValidUtil.isInvalid(mchId)) {
-            _log.warn("查询商户信息失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
+            log.warn("查询商户信息失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_INVALID);
         }
         MchInfo mchInfo = super.baseSelectMchInfo(mchId);

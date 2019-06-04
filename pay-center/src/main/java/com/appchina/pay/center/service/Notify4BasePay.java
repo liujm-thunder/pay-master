@@ -1,11 +1,12 @@
 package com.appchina.pay.center.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.appchina.pay.center.service.mq.Mq4PayNotify;
+//import com.appchina.pay.center.service.mq.Mq4PayNotify;
 import com.appchina.pay.common.constant.PayConstant;
 import com.appchina.pay.common.util.MyLog;
 import com.appchina.pay.common.util.PayDigestUtil;
 import com.appchina.pay.common.util.PayUtil;
+import com.appchina.pay.dao.model.GoodsOrder;
 import com.appchina.pay.dao.model.MchInfo;
 import com.appchina.pay.dao.model.PayOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,10 @@ import java.util.Map;
 @Component
 public class Notify4BasePay extends BaseService {
 
-	private static final MyLog _log = MyLog.getLog(Notify4BasePay.class);
+	private static final MyLog log = MyLog.getLog(Notify4BasePay.class);
 
-	@Autowired
-	private Mq4PayNotify mq4PayNotify;
+//	@Autowired
+//	private Mq4PayNotify mq4PayNotify;
 
 	/**
 	 * 创建响应URL
@@ -63,7 +64,7 @@ public class Notify4BasePay extends BaseService {
 			paramMap.put("param1", URLEncoder.encode(payOrder.getParam1()==null ? "" : payOrder.getParam1(), PayConstant.RESP_UTF8));
 			paramMap.put("param2", URLEncoder.encode(payOrder.getParam2()==null ? "" : payOrder.getParam2(), PayConstant.RESP_UTF8));
 		}catch (UnsupportedEncodingException e) {
-			_log.error("URL Encode exception.", e);
+			log.error("URL Encode exception.", e);
 			return null;
 		}
 		String param = PayUtil.genUrlParams(paramMap);
@@ -77,12 +78,12 @@ public class Notify4BasePay extends BaseService {
 	 */
 	public boolean doPage(PayOrder payOrder) {
 		String redirectUrl = createNotifyUrl(payOrder, "1");
-		_log.info("redirect to respUrl:"+redirectUrl);
+		log.info("redirect to respUrl:"+redirectUrl);
 		// 前台跳转业务系统
 		/*try {
 			response.sendRedirect(redirectUrl);
 		} catch (IOException e) {
-			_log.error("XxPay sendRedirect exception. respUrl="+redirectUrl, e);
+			log.error("XxPay sendRedirect exception. respUrl="+redirectUrl, e);
 			return false;
 		}*/
 		return true;
@@ -92,15 +93,15 @@ public class Notify4BasePay extends BaseService {
 	 * 处理支付结果后台服务器通知
 	 */
 	public void doNotify(PayOrder payOrder) {
-		_log.info(">>>>>> PAY开始回调通知业务系统 <<<<<<");
+		log.info(">>>>>> PAY开始回调通知业务系统 <<<<<<");
 		// 发起后台通知业务系统
 		JSONObject object = createNotifyInfo(payOrder);
 		try {
-			mq4PayNotify.send(object.toJSONString());
+//			mq4PayNotify.send(object.toJSONString());
 		} catch (Exception e) {
-			_log.error("payOrderId={},sendMessage error.", payOrder != null ? payOrder.getPayOrderId() : "", e);
+			log.error("payOrderId={},sendMessage error.", payOrder != null ? payOrder.getPayOrderId() : "", e);
 		}
-		_log.info(">>>>>> PAY回调通知业务系统完成 <<<<<<");
+		log.info(">>>>>> PAY回调通知业务系统完成 <<<<<<");
 	}
 
 	public JSONObject createNotifyInfo(PayOrder payOrder) {

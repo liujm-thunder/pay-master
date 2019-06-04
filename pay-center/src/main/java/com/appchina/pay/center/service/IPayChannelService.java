@@ -9,5 +9,7 @@ public interface IPayChannelService {
 
     Map selectPayChannel(String jsonParam);
 
+    Map selectPayChannels(String jsonParam);
+
     JSONObject getByMchIdAndChannelId(String mchId, String channelId);
 }
