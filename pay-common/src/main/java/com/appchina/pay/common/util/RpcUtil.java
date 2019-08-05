@@ -101,7 +101,7 @@ public class RpcUtil {
     }
 
     public static String mkRet(Map<String, Object> result) {
-        //_log.info("调用dal返回result={}", result);
+        //log.info("调用dal返回result={}", result);
         if(result == null) return null;
         String retCode = (String)result.get("rpcRetCode");
         if("0000".equals(retCode)) {

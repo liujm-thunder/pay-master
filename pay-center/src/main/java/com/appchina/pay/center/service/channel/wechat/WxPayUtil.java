@@ -43,4 +43,22 @@ public class WxPayUtil {
         return wxPayConfig;
     }
 
+    /**
+     * 获取微信支付配置
+     * @param configParam
+     * @return
+     */
+    public static WxPayConfig getWxPayConfig(String configParam, String tradeType,String notifyUrl) {
+        WxPayConfig wxPayConfig = new WxPayConfig();
+        JSONObject paramObj = JSON.parseObject(configParam);
+//        wxPayConfig.setMchId(paramObj.getString("mchId"));
+//        wxPayConfig.setAppId(paramObj.getString("appId"));
+        //TODO 暂时写死
+        wxPayConfig.setMchId("1490509592");
+        wxPayConfig.setAppId("wxbc75211100824e50");
+        wxPayConfig.setMchKey("jmjsyyh2015jmjsyyh2015jmjsyyh201");
+        wxPayConfig.setNotifyUrl(notifyUrl);
+        wxPayConfig.setTradeType(tradeType);
+        return wxPayConfig;
+    }
 }

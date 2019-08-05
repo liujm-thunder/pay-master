@@ -28,6 +28,7 @@ public class PayConstant {
 	public final static byte PAY_STATUS_PAYING = 1; 	// 支付中
 	public final static byte PAY_STATUS_SUCCESS = 2; 	// 支付成功
 	public final static byte PAY_STATUS_COMPLETE = 3; 	// 业务完成
+	public final static byte PAY_STATUS_CANCLE = 4; 	// 支付取消
 
 	public final static byte TRANS_STATUS_INIT = 0; 		// 初始态
 	public final static byte TRANS_STATUS_TRANING = 1; 		// 转账中
@@ -101,5 +102,18 @@ public class PayConstant {
 
 	public static final String NOTIFY_BUSI_PAY = "NOTIFY_VV_PAY_RES";
 	public static final String NOTIFY_BUSI_TRANS = "NOTIFY_VV_TRANS_RES";
-	
+
+	public static final String WX_TRADESTATE_SUCCESS = "SUCCESS";//支付成功
+	public static final String WX_TRADESTATE_REDUND = "REFUND";//转入退款
+	public static final String WX_TRADESTATE_NOTPAY = "NOTPAY";//未支付
+	public static final String WX_TRADESTATE_CLOSED = "CLOSED";//已关闭
+	public static final String WX_TRADESTATE_REVOKED = "REVOKED";//已撤销
+	public static final String WX_TRADESTATE_USERPAYING = "USERPAYING";//用户支付中
+	public static final String WX_TRADESTATE_PAYERROR = "PAYERROR";//支付失败
+
+
+	public static final String RETURN_PAY_STATUS_SUCCESS= "SUCCESS";//支付成功
+	public static final String RETURN_PAY_STATUS_FAIL= "FAIL";//支付失败
+	public static final String RETURN_PAY_STATUS_NOTPAY= "NOTPAY";//未支付
+
 }

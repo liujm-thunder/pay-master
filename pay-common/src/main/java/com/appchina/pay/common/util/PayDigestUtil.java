@@ -1,9 +1,11 @@
 package com.appchina.pay.common.util;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,9 +14,9 @@ import java.util.Map;
 
 public class PayDigestUtil {
 
-	private static final MyLog _log = MyLog.getLog(PayDigestUtil.class);
+	private static final MyLog log = MyLog.getLog(PayDigestUtil.class);
 	private static String encodingCharset = "UTF-8";
-	
+
 	/**
 	 * @param aValue
 	 * @param aKey
@@ -149,9 +151,9 @@ public class PayDigestUtil {
 		}
 		String result = sb.toString();
 		result += "key=" + key;
-		_log.debug("Sign Before MD5:" + result);
+		log.debug("Sign Before MD5:" + result);
 		result = md5(result, encodingCharset).toUpperCase();
-		_log.debug("Sign Result:" + result);
+		log.debug("Sign Result:" + result);
 		return result;
 	}
 
@@ -171,9 +173,73 @@ public class PayDigestUtil {
 		}
 		String result = sb.toString();
 		result += "key=" + key;
-		_log.debug("Sign Before MD5:" + result);
+		log.debug("Sign Before MD5:" + result);
 		result = md5(result, encodingCharset).toUpperCase();
-		_log.debug("Sign Result:" + result);
+		log.debug("Sign Result:" + result);
+		return result;
+	}
+
+
+	/***
+	 * RSA方式签名
+	 * @param map
+	 * @param key
+	 * @return
+	 */
+	public static String getSignRsaByKey(Map<String,Object> map, String key) throws InvalidKeySpecException, SignatureException, InvalidKeyException {
+		ArrayList<String> list = new ArrayList<String>();
+		for(Map.Entry<String,Object> entry:map.entrySet()){
+			if(!"".equals(entry.getValue()) && null != entry.getValue()){
+				list.add(entry.getKey() + "=" + entry.getValue() + "&");
+			}
+		}
+		int size = list.size();
+		String [] arrayToSort = list.toArray(new String[size]);
+		Arrays.sort(arrayToSort, String.CASE_INSENSITIVE_ORDER);
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < size; i ++) {
+			sb.append(arrayToSort[i]);
+		}
+		String result = sb.toString();
+		if (result.lastIndexOf("&") != -1 && result.lastIndexOf("&") == result.length()-1){
+			result = result.substring(0,result.length()-1);
+		}
+		log.debug("Sign Before RSA:" + result);
+		PrivateKey priKey = RSAHelper.priKeyFromBase64(key);
+		result = RSAHelper.signToBase64(result, priKey);
+		log.debug("Sign Result:" + result);
+		return result;
+	}
+
+
+	public static String getSignRsaByKey(Object o, String key) throws IllegalAccessException, InvalidKeySpecException, SignatureException, InvalidKeyException {
+		if(o instanceof Map) {
+			return getSignRsaByKey((Map<String, Object>)o, key);
+		}
+		ArrayList<String> list = new ArrayList<String>();
+		Class cls = o.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field f : fields) {
+			f.setAccessible(true);
+			if (f.get(o) != null && !"".equals(f.get(o))) {
+				list.add(f.getName() + "=" + f.get(o) + "&");
+			}
+		}
+		int size = list.size();
+		String [] arrayToSort = list.toArray(new String[size]);
+		Arrays.sort(arrayToSort, String.CASE_INSENSITIVE_ORDER);
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < size; i ++) {
+			sb.append(arrayToSort[i]);
+		}
+		String result = sb.toString();
+		if (result.lastIndexOf("&") != -1 && result.lastIndexOf("&") == result.length()-1){
+			result = result.substring(0,result.length()-1);
+		}
+		log.debug("Sign Before RSA:" + result);
+		PrivateKey priKey = RSAHelper.priKeyFromBase64(key);
+		result = RSAHelper.signToBase64(result, priKey);
+		log.debug("Sign Result:" + result);
 		return result;
 	}
 
@@ -208,5 +274,35 @@ public class PayDigestUtil {
 		
 		System.out.println(md5(dataStr, "UTF-8"));
 		System.out.println(md5(dataStr, "GBK"));
+
+
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("mchId","20001222");
+		params.put("mchOrderNo","20160427210604000490");
+		params.put("channelId","WX_MWEB");
+		params.put("currency","cny");
+		params.put("amount",100);
+		params.put("clientIp","221.217.228.166");
+		params.put("device","Android");
+		params.put("notifyUrl","http://shop.xxpay.org/notify.htm");
+		params.put("subject","pay测试商品");
+		params.put("body","测试商品描述");
+		params.put("param1","");
+		params.put("param2","");
+
+        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonObject1 = new JSONObject();
+        JSONObject jsonObject2 = new JSONObject();
+        jsonObject2.put("type","Android");
+        jsonObject2.put("app_name","王者荣耀");
+        jsonObject2.put("package_name","com.tencent.tmgp.sgame");
+
+        jsonObject1.put("h5_info",jsonObject2);
+        jsonObject.put("sceneInfo",jsonObject1);
+        params.put("extra",jsonObject.toJSONString());
+        System.out.println(getSign(params, "M86l522AV6q613Ii4W6u8K48uW8vM1N6bFgyv769220MdYe9u37N4y7rI5mQ"));
+        System.out.println(getSign(params, "M86l522AV6q613Ii4W6u8K48uW8vM1N6bFgyv769220MdYe9u37N4y7rI5mQ"));
+        System.out.println(getSign(params, "Hpcl522AV6q613KIi46u6g6XuW8vM1N8bFgyv769770MdYe9u37M4y7rIpl8"));
+
 	}
 }

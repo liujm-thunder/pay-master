@@ -30,11 +30,13 @@ public interface IPayOrderService {
 
     String doWxPayReq(String tradeType, JSONObject payOrder, String resKey);
 
-    String doWxPayRequest(String tradeType, JSONObject payOrder, String resKey);
-
     String doAliPayReq(String channelId, JSONObject payOrder, String resKey);
 
     String queryWxPayOrderRequest(PayOrder payOrder,String resKey);
 
+    String queryAliPayOrderRequest(PayOrder payOrder,String resKey);
+
     PayOrder queryPayOrderByPayOrderId(String payOrderId);
+
+    PayOrder selectPayOrderByMchIdAndMchOrderNo(String mchId,String mchOrderNo);
 }

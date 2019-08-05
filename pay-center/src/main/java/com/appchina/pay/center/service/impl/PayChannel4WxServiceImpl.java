@@ -123,7 +123,7 @@ public class PayChannel4WxServiceImpl extends BaseService implements IPayChannel
                         break;
                     }
                     case PayConstant.WxConstant.TRADE_TYPE_MWEB : {
-                        map.put("payUrl", wxPayUnifiedOrderResult.getMwebUrl());    // h5支付链接地址
+                        map.put("payParams", wxPayUnifiedOrderResult.getMwebUrl());    // h5支付链接地址
                         break;
                     }
                 }
@@ -222,7 +222,7 @@ public class PayChannel4WxServiceImpl extends BaseService implements IPayChannel
         if (payOrder.getStatus().intValue()==PayConstant.PAY_STATUS_SUCCESS){
             map.put("tradeState",PayConstant.RETURN_PAY_STATUS_SUCCESS);
             map.put("tradeStateDesc","支付成功");
-            return RpcUtil.createBizResult(null, map);
+            return map;
         }
 
         try{
@@ -248,32 +248,36 @@ public class PayChannel4WxServiceImpl extends BaseService implements IPayChannel
                 JSONObject param2 = new JSONObject();
                 param2.put("trade_state",tradeState);
                 param2.put("trade_state_desc",trade_state_desc);
-
                 byte status;
                 String returnTradeState;
                 if (tradeState.equalsIgnoreCase(PayConstant.WX_TRADESTATE_SUCCESS)){
                     status = PayConstant.PAY_STATUS_SUCCESS;
                     returnTradeState=PayConstant.RETURN_PAY_STATUS_SUCCESS;
                     trade_state_desc = "支付成功";
-                    super.baseUpdateStatus(payOrder.getPayOrderId(), payOrder.getChannelOrderNo(),status,null,null,null);
                 }else if (tradeState.equalsIgnoreCase(PayConstant.RETURN_PAY_STATUS_NOTPAY)){
-                    returnTradeState=PayConstant.RETURN_PAY_STATUS_CANCEL;
+                    returnTradeState=PayConstant.RETURN_PAY_STATUS_NOTPAY;
                     trade_state_desc = "待支付";
+                    status = PayConstant.PAY_STATUS_PAYING;
                 }else {
                     returnTradeState=PayConstant.RETURN_PAY_STATUS_FAIL;
                     trade_state_desc = "支付失败";
+                    status = PayConstant.PAY_STATUS_FAILED;
                 }
+                super.baseUpdateStatus(payOrder.getPayOrderId(), payOrder.getChannelOrderNo(),status,null,null,null);
                 map.put("tradeState", returnTradeState);
                 map.put("tradeStateDesc", trade_state_desc);
-                return RpcUtil.createBizResult(null, map);
+                return map;
             } catch (WxPayException e) {
                 map.put("tradeState", PayConstant.RETURN_PAY_STATUS_FAIL);
                 map.put("tradeStateDesc", "支付失败");
-                return RpcUtil.createBizResult(null, map);
+                super.baseUpdateStatus(payOrder.getPayOrderId(), payOrder.getChannelOrderNo(),PayConstant.PAY_STATUS_FAILED,null,e.getErrCode(),e.getErrCodeDes());
+                return map;
             }
         }catch (Exception e) {
             log.error(e, "微信支付查询订单异常");
-            return RpcUtil.createFailResult(null, RetEnum.RET_BIZ_WX_PAY_CREATE_FAIL);
+            map.put("tradeState", PayConstant.RETURN_PAY_STATUS_FAIL);
+            map.put("tradeStateDesc", "微信支付查询订单异常");
+            return map;
 
         }
     }

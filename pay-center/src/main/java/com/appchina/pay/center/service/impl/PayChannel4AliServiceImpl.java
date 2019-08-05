@@ -5,14 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.domain.AlipayTradeAppPayModel;
-import com.alipay.api.domain.AlipayTradePagePayModel;
-import com.alipay.api.domain.AlipayTradePrecreateModel;
-import com.alipay.api.domain.AlipayTradeWapPayModel;
-import com.alipay.api.request.AlipayTradeAppPayRequest;
-import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.alipay.api.request.AlipayTradePrecreateRequest;
-import com.alipay.api.request.AlipayTradeWapPayRequest;
+import com.alipay.api.domain.*;
+import com.alipay.api.request.*;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.appchina.pay.center.service.BaseService;
 import com.appchina.pay.center.service.IPayChannel4AliService;
 import com.appchina.pay.center.service.channel.alipay.AlipayConfig;
@@ -28,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -101,7 +98,7 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         log.info("###### 商户统一下单处理完成 ######");
         Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
         map.put("payOrderId", payOrderId);
-        map.put("payUrl", payUrl);
+        map.put("payParams", payUrl);
         return RpcUtil.createBizResult(baseParam, map);
     }
 
@@ -166,7 +163,7 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         log.info("###### 商户统一下单处理完成 ######");
         Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
         map.put("payOrderId", payOrderId);
-        map.put("payUrl", payUrl);
+        map.put("payParams", payUrl);
         return RpcUtil.createBizResult(baseParam, map);
     }
 
@@ -281,8 +278,85 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         log.info("###### 商户统一下单处理完成 ######");
         Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
         map.put("payOrderId", payOrderId);
-        map.put("payUrl", payUrl);
+        map.put("payParams", payUrl);
         return RpcUtil.createBizResult(baseParam, map);
+    }
+
+
+
+    @Override
+    public Map doQueryAliPayOrder(PayOrder payOrder) {
+        String logPrefix = "【支付宝查询订单】";
+        Map<String, Object> map = new HashMap<>();
+        map.put("orderId", payOrder.getMchOrderNo());
+        if (payOrder.getStatus().intValue()==PayConstant.PAY_STATUS_SUCCESS){
+            map.put("tradeState",PayConstant.RETURN_PAY_STATUS_SUCCESS);
+            map.put("tradeStateDesc","支付成功");
+            return map;
+        }
+        String payOrderId = payOrder.getPayOrderId();
+        String mchId = payOrder.getMchId();
+        String channelId = payOrder.getChannelId();
+        PayChannel payChannel = super.baseSelectPayChannel(mchId, channelId);
+        alipayConfig.init(payChannel.getParam());
+        AlipayClient client = new DefaultAlipayClient(alipayConfig.getUrl(), alipayConfig.getApp_id(), alipayConfig.getRsa_private_key(), AlipayConfig.FORMAT, AlipayConfig.CHARSET, alipayConfig.getAlipay_public_key(), AlipayConfig.SIGNTYPE);
+
+        AlipayTradeQueryRequest alipayTradeQueryRequest = new AlipayTradeQueryRequest();
+        // 封装请求支付信息
+        AlipayTradeQueryModel alipayTradeQueryModel = new AlipayTradeQueryModel();
+        alipayTradeQueryModel.setOutTradeNo(payOrderId);
+        alipayTradeQueryModel.setTradeNo(payOrder.getChannelOrderNo());
+
+        alipayTradeQueryRequest.setBizModel(alipayTradeQueryModel);
+        AlipayTradeQueryResponse response = null;
+        try {
+            response = client.execute(alipayTradeQueryRequest);
+            byte status;
+            if (response != null && response.getTradeStatus() != null) {
+                String orderStatus = response.getTradeStatus();
+                if(orderStatus.equalsIgnoreCase(PayConstant.AlipayConstant.TRADE_STATUS_SUCCESS)){
+                    //支付成功
+                    map.put("tradeState", PayConstant.RETURN_PAY_STATUS_SUCCESS);
+                    map.put("tradeStateDesc", "支付成功");
+                    status = PayConstant.PAY_STATUS_SUCCESS;
+                }else if (orderStatus.equalsIgnoreCase(PayConstant.AlipayConstant.TRADE_STATUS_FINISHED)){
+                    //支付成功但不能退款
+                    map.put("tradeState", PayConstant.RETURN_PAY_STATUS_SUCCESS);
+                    map.put("tradeStateDesc", "支付成功");
+                    status = PayConstant.PAY_STATUS_SUCCESS;
+                }else if (orderStatus.equalsIgnoreCase(PayConstant.AlipayConstant.TRADE_STATUS_WAIT)){
+                    map.put("tradeState", PayConstant.RETURN_PAY_STATUS_NOTPAY);
+                    map.put("tradeStateDesc", "待支付");
+                    status = PayConstant.PAY_STATUS_PAYING;
+                }else if (orderStatus.equalsIgnoreCase(PayConstant.AlipayConstant.TRADE_STATUS_CLOSED)){
+                    map.put("tradeState", PayConstant.RETURN_PAY_STATUS_FAIL);
+                    map.put("tradeStateDesc", "支付失败");
+                    status = PayConstant.PAY_STATUS_FAILED;
+                }else {
+                    map.put("tradeState", PayConstant.RETURN_PAY_STATUS_FAIL);
+                    map.put("tradeStateDesc", "支付失败");
+                    status = PayConstant.PAY_STATUS_FAILED;
+                }
+            }else if (response != null && response.getSubCode() != null && response.getSubCode().equalsIgnoreCase("ACQ.TRADE_NOT_EXIST")){
+                map.put("tradeState", PayConstant.RETURN_PAY_STATUS_NOTPAY);
+                map.put("tradeStateDesc", "待支付");
+                status = PayConstant.PAY_STATUS_PAYING;
+            }else {
+                status = PayConstant.PAY_STATUS_FAILED;
+                map.put("tradeState", PayConstant.RETURN_PAY_STATUS_FAIL);
+                map.put("tradeStateDesc", "支付失败");
+            }
+            super.baseUpdateStatus(payOrder.getPayOrderId(), payOrder.getChannelOrderNo(),status,null,null,null);
+        } catch (AlipayApiException e) {
+            log.error(e, "支付宝查询订单异常 response {}",response.getBody());
+            map.put("tradeState", PayConstant.RETURN_PAY_STATUS_FAIL);
+            map.put("tradeStateDesc", "支付宝查询订单异常");
+            return map;
+        }
+        log.info("{}查询订单响应：response={}", logPrefix, response.getBody());
+        log.info("{}生成请求支付宝数据,req={}", logPrefix, map);
+        log.info("###### 商户查询订单处理完成 ######");
+        return map;
     }
 
 }

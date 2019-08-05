@@ -3,41 +3,41 @@ package com.appchina.pay.common.util;
 
 public class MyLogFace implements MyLogInf {
 
-    private org.slf4j.Logger 				_log = null;
-    public void setName(String clz) { 		_log = org.slf4j.LoggerFactory.getLogger(clz);	}
+    private org.slf4j.Logger 				log = null;
+    public void setName(String clz) { 		log = org.slf4j.LoggerFactory.getLogger(clz);	}
 
-    public boolean isDebugEnabled() { return _log.isDebugEnabled();		}
-    public boolean isInfoEnabled() 	{ return _log.isInfoEnabled();   	}
-    public boolean isWarnEnabled() 	{ return _log.isWarnEnabled();		}
-    public boolean isErrorEnabled() { return _log.isErrorEnabled();		}
-    public boolean isTraceEnabled() { return _log.isTraceEnabled();		}
+    public boolean isDebugEnabled() { return log.isDebugEnabled();		}
+    public boolean isInfoEnabled() 	{ return log.isInfoEnabled();   	}
+    public boolean isWarnEnabled() 	{ return log.isWarnEnabled();		}
+    public boolean isErrorEnabled() { return log.isErrorEnabled();		}
+    public boolean isTraceEnabled() { return log.isTraceEnabled();		}
 
     public void trace(String message, Object... args) {
-        if (this.isTraceEnabled())	_log.trace(message, args);
+        if (this.isTraceEnabled())	log.trace(message, args);
     }
 
     public void debug(String message, Object... args) {
-        if (this.isDebugEnabled())	_log.debug(message, args);
+        if (this.isDebugEnabled())	log.debug(message, args);
     }
 
     public void info(String message, Object... args) {
-        if (this.isInfoEnabled())	_log.info(message, args);
+        if (this.isInfoEnabled())	log.info(message, args);
     }
 
     public void warn(String message, Object... args) {
-        if (this.isWarnEnabled())	_log.warn(message, args);
+        if (this.isWarnEnabled())	log.warn(message, args);
     }
 
     public void error(String message, Object... args) {
-        if (this.isErrorEnabled())	_log.error(message, args);
+        if (this.isErrorEnabled())	log.error(message, args);
     }
 
     public void error(Throwable e, String message, Object... args) {
-        if (this.isErrorEnabled())	_log.error(String.format(message, args), e);
+        if (this.isErrorEnabled())	log.error(String.format(message, args), e);
     }
     //------------------
     public void error(Throwable e, String message) {//简化版
-        if (this.isErrorEnabled()) _log.error(message+e.toString(), e);
+        if (this.isErrorEnabled()) log.error(message+e.toString(), e);
     }
 
 }

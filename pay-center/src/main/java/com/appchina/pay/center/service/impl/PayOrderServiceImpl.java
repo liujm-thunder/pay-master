@@ -86,40 +86,17 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         }
         Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
         map.putAll((Map) result.get("bizResult"));
-        return PayUtil.makeRetData(map, resKey);
-    }
-
-    /***
-     * todo 重构
-     * @param tradeType
-     * @param payOrder
-     * @param resKey
-     * @return
-     */
-    public String doWxPayRequest(String tradeType, JSONObject payOrder, String resKey) {
-        Map<String,Object> paramMap = new HashMap<>();
-        paramMap.put("tradeType", tradeType);
-        paramMap.put("payOrder", payOrder);
-        String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map<String, Object> result = payChannel4WxService.doWxPayReq(jsonParam);
-        String s = RpcUtil.mkRet(result);
-        if(s == null) {
-            return PayUtil.makeRetData(PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_FAIL, "0111", "调用微信支付失败"), resKey);
-        }
-        Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
-        map.putAll((Map) result.get("bizResult"));
-        return PayUtil.makeRetData(map, resKey);
+        return PayUtil.makeRetDataRsa(map, resKey);
     }
 
     public String queryWxPayOrderRequest(PayOrder payOrder,String resKey) {
-        Map<String, Object> result = payChannel4WxService.queryWxPayOrderRequest(payOrder);
-        String s = RpcUtil.mkRet(result);
-        if(s == null) {
-            return PayUtil.makeRetData(PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_FAIL, "0111", "调用微信支付失败"), resKey);
-        }
-        Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
-        map.putAll((Map) result.get("bizResult"));
-        return PayUtil.makeRetData(map, resKey);
+        Map<String, Object> map = payChannel4WxService.queryWxPayOrderRequest(payOrder);
+        return PayUtil.makeRetDataRsa(com.appchina.pay.common.util.Result.success(map), resKey);
+    }
+
+    public String queryAliPayOrderRequest(PayOrder payOrder,String resKey) {
+        Map<String, Object> map = payChannel4AliService.doQueryAliPayOrder(payOrder);
+        return PayUtil.makeRetDataRsa(com.appchina.pay.common.util.Result.success(map), resKey);
     }
 
     public String doAliPayReq(String channelId, JSONObject payOrder, String resKey) {
@@ -150,7 +127,7 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         }
         Map<String, Object> map = PayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_SUCCESS, null);
         map.putAll((Map) result.get("bizResult"));
-        return PayUtil.makeRetData(map, resKey);
+        return PayUtil.makeRetDataRsa(map, resKey);
     }
 
     @Override
@@ -234,6 +211,9 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
+    public PayOrder selectPayOrderByMchIdAndMchOrderNo(String mchId,String mchOrderNo) {
+        return super.baseSelectPayOrderByMchIdAndMchOrderNo(mchId, mchOrderNo);
+    }
 
     @Override
     public Map updateStatus4Ing(String jsonParam) {

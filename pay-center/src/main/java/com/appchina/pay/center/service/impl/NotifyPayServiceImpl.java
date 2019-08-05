@@ -87,7 +87,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
             log.info("{}响应给支付宝结果：{}", logPrefix, PayConstant.RETURN_ALIPAY_VALUE_SUCCESS);
             return RpcUtil.createBizResult(baseParam, PayConstant.RETURN_ALIPAY_VALUE_SUCCESS);
         }
-//        doNotify(payOrder);
+        doNotify(payOrder);
         log.info("====== 完成处理支付宝支付回调通知 ======");
         return RpcUtil.createBizResult(baseParam, PayConstant.RETURN_ALIPAY_VALUE_SUCCESS);
     }
@@ -138,7 +138,7 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
                 }
             }
             // 业务系统后端通知
-//          doNotify(payOrder);
+            doNotify(payOrder);
             log.info("====== 完成处理微信支付回调通知 ======");
             return RpcUtil.createBizResult(baseParam, WxPayNotifyResponse.success("OK"));
         } catch (WxPayException e) {
