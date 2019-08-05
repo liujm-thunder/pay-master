@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/pay-center/pay-center.iml" filepath="$PROJECT_DIR$/pay-center/pay-center.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pay-common/pay-common.iml" filepath="$PROJECT_DIR$/pay-common/pay-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pay-dao/pay-dao.iml" filepath="$PROJECT_DIR$/pay-dao/pay-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pay-manage/pay-manage.iml" filepath="$PROJECT_DIR$/pay-manage/pay-manage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pay-master.iml" filepath="$PROJECT_DIR$/pay-master.iml" />
+    </modules>
+  </component>
+</project>

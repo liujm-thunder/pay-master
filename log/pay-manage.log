@@ -1,0 +1,340 @@
+2019-05-14 16:13:40.411  INFO 36492 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 36492 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-14 16:13:40.416  INFO 36492 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-14 16:13:40.538  INFO 36492 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@25b485ba: startup date [Tue May 14 16:13:40 CST 2019]; root of context hierarchy
+2019-05-14 16:13:41.435  WARN 36492 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-14 16:13:42.238  INFO 36492 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-14 16:13:42.250  INFO 36492 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-14 16:13:42.251  INFO 36492 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-14 16:13:42.344  INFO 36492 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-14 16:13:42.344  INFO 36492 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1811 ms
+2019-05-14 16:13:42.494  INFO 36492 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-14 16:13:42.499  INFO 36492 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-14 16:13:42.500  INFO 36492 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-14 16:13:42.500  INFO 36492 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-14 16:13:42.500  INFO 36492 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-14 16:13:42.561  WARN 36492 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-14 16:13:42.563  INFO 36492 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-14 16:13:42.590  INFO 36492 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-14 16:13:42.727 ERROR 36492 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
+2019-05-14 16:21:40.818  INFO 38014 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 38014 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-14 16:21:40.824  INFO 38014 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-14 16:21:40.973  INFO 38014 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@25b485ba: startup date [Tue May 14 16:21:40 CST 2019]; root of context hierarchy
+2019-05-14 16:21:42.142  WARN 38014 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-14 16:21:43.031  INFO 38014 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-14 16:21:43.042  INFO 38014 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-14 16:21:43.043  INFO 38014 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-14 16:21:43.143  INFO 38014 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-14 16:21:43.143  INFO 38014 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2174 ms
+2019-05-14 16:21:43.277  INFO 38014 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-14 16:21:43.282  INFO 38014 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-14 16:21:43.283  INFO 38014 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-14 16:21:43.283  INFO 38014 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-14 16:21:43.284  INFO 38014 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-14 16:21:43.347  WARN 38014 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-14 16:21:43.350  INFO 38014 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-14 16:21:43.374  INFO 38014 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-14 16:21:43.552 ERROR 38014 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
+2019-05-14 16:22:27.688  INFO 38169 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 38169 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-14 16:22:27.691  INFO 38169 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-14 16:22:27.895  INFO 38169 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@25b485ba: startup date [Tue May 14 16:22:27 CST 2019]; root of context hierarchy
+2019-05-14 16:22:28.764  WARN 38169 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-14 16:22:29.565  INFO 38169 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-14 16:22:29.576  INFO 38169 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-14 16:22:29.578  INFO 38169 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-14 16:22:29.664  INFO 38169 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-14 16:22:29.665  INFO 38169 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1776 ms
+2019-05-14 16:22:29.800  INFO 38169 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-14 16:22:29.809  INFO 38169 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-14 16:22:29.809  INFO 38169 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-14 16:22:29.809  INFO 38169 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-14 16:22:29.810  INFO 38169 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-14 16:22:29.861  WARN 38169 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-14 16:22:29.863  INFO 38169 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-14 16:22:29.886  INFO 38169 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-14 16:22:30.001 ERROR 38169 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
+2019-05-14 16:53:31.336  INFO 43916 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 43916 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-14 16:53:31.341  INFO 43916 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-14 16:53:31.430  INFO 43916 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@6ea2bc93: startup date [Tue May 14 16:53:31 CST 2019]; root of context hierarchy
+2019-05-14 16:53:32.372  WARN 43916 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-14 16:53:33.469  INFO 43916 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-14 16:53:33.487  INFO 43916 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-14 16:53:33.489  INFO 43916 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-14 16:53:33.633  INFO 43916 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-14 16:53:33.634  INFO 43916 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2211 ms
+2019-05-14 16:53:33.894  INFO 43916 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-14 16:53:33.905  INFO 43916 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-14 16:53:33.906  INFO 43916 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-14 16:53:33.906  INFO 43916 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-14 16:53:33.907  INFO 43916 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-14 16:53:34.008  WARN 43916 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-14 16:53:34.010  INFO 43916 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-14 16:53:34.039  INFO 43916 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-14 16:53:34.157 ERROR 43916 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
+2019-05-21 15:50:16.450  INFO 760 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 760 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-21 15:50:16.463  INFO 760 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-21 15:50:16.573  INFO 760 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@25b485ba: startup date [Tue May 21 15:50:16 CST 2019]; root of context hierarchy
+2019-05-21 15:50:17.474  WARN 760 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-21 15:50:18.357  INFO 760 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-21 15:50:18.368  INFO 760 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-21 15:50:18.369  INFO 760 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-21 15:50:18.464  INFO 760 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-21 15:50:18.465  INFO 760 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1899 ms
+2019-05-21 15:50:18.632  INFO 760 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-21 15:50:18.641  INFO 760 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-21 15:50:18.642  INFO 760 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-21 15:50:18.642  INFO 760 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-21 15:50:18.642  INFO 760 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-21 15:50:18.700  WARN 760 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-21 15:50:18.703  INFO 760 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-21 15:50:18.812  INFO 760 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-21 15:50:18.972 ERROR 760 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
+2019-05-21 15:51:40.981  INFO 1044 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 1044 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-21 15:51:40.986  INFO 1044 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-21 15:51:41.091  INFO 1044 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@25b485ba: startup date [Tue May 21 15:51:41 CST 2019]; root of context hierarchy
+2019-05-21 15:51:42.249  WARN 1044 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-21 15:51:43.083  INFO 1044 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-21 15:51:43.095  INFO 1044 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-21 15:51:43.096  INFO 1044 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-21 15:51:43.193  INFO 1044 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-21 15:51:43.194  INFO 1044 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2112 ms
+2019-05-21 15:51:43.333  INFO 1044 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-21 15:51:43.339  INFO 1044 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-21 15:51:43.339  INFO 1044 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-21 15:51:43.340  INFO 1044 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-21 15:51:43.340  INFO 1044 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-21 15:51:43.398  WARN 1044 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-21 15:51:43.400  INFO 1044 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-21 15:51:43.427  INFO 1044 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-21 15:51:43.560 ERROR 1044 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
+2019-05-21 15:52:29.254  INFO 1208 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 1208 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-21 15:52:29.258  INFO 1208 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-21 15:52:29.354  INFO 1208 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@25b485ba: startup date [Tue May 21 15:52:29 CST 2019]; root of context hierarchy
+2019-05-21 15:52:30.057  WARN 1208 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-21 15:52:30.748  INFO 1208 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-21 15:52:30.757  INFO 1208 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-21 15:52:30.758  INFO 1208 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-21 15:52:30.831  INFO 1208 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-21 15:52:30.832  INFO 1208 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1482 ms
+2019-05-21 15:52:30.960  INFO 1208 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-21 15:52:30.965  INFO 1208 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-21 15:52:30.966  INFO 1208 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-21 15:52:30.966  INFO 1208 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-21 15:52:30.967  INFO 1208 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-21 15:52:31.023  WARN 1208 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-21 15:52:31.026  INFO 1208 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-21 15:52:31.050  INFO 1208 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-21 15:52:31.150 ERROR 1208 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
+2019-05-21 16:08:52.010  INFO 4430 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 4430 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-21 16:08:52.036  INFO 4430 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-21 16:08:52.199  INFO 4430 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@25b485ba: startup date [Tue May 21 16:08:52 CST 2019]; root of context hierarchy
+2019-05-21 16:08:53.087  WARN 4430 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-21 16:08:53.947  INFO 4430 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-21 16:08:53.958  INFO 4430 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-21 16:08:53.959  INFO 4430 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-21 16:08:54.058  INFO 4430 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-21 16:08:54.058  INFO 4430 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1863 ms
+2019-05-21 16:08:54.216  INFO 4430 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-21 16:08:54.224  INFO 4430 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-21 16:08:54.225  INFO 4430 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-21 16:08:54.225  INFO 4430 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-21 16:08:54.225  INFO 4430 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-21 16:08:54.279  WARN 4430 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-21 16:08:54.281  INFO 4430 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-21 16:08:54.306  INFO 4430 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-21 16:08:54.449 ERROR 4430 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
+2019-05-21 16:39:19.642  INFO 10104 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 10104 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-21 16:39:19.660  INFO 10104 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-21 16:39:19.834  INFO 10104 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@6ea2bc93: startup date [Tue May 21 16:39:19 CST 2019]; root of context hierarchy
+2019-05-21 16:39:21.267  WARN 10104 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-21 16:39:22.212  INFO 10104 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-21 16:39:22.227  INFO 10104 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-21 16:39:22.229  INFO 10104 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-21 16:39:22.372  INFO 10104 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-21 16:39:22.373  INFO 10104 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2551 ms
+2019-05-21 16:39:22.592  INFO 10104 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-21 16:39:22.606  INFO 10104 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-21 16:39:22.607  INFO 10104 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-21 16:39:22.607  INFO 10104 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-21 16:39:22.607  INFO 10104 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-21 16:39:22.678  WARN 10104 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-21 16:39:22.681  INFO 10104 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-21 16:39:22.729  INFO 10104 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-21 16:39:22.851 ERROR 10104 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
+2019-05-27 11:15:05.602  INFO 13996 --- [main] c.a.pay.manage.PayManageApplication      : Starting PayManageApplication on liujianmeng with PID 13996 (/Users/liujianmeng/Documents/workspace/pay-master/pay-manage/target/classes started by liujianmeng in /Users/liujianmeng/Documents/workspace/pay-master)
+2019-05-27 11:15:05.608  INFO 13996 --- [main] c.a.pay.manage.PayManageApplication      : No active profile set, falling back to default profiles: default
+2019-05-27 11:15:05.705  INFO 13996 --- [main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@6ea2bc93: startup date [Mon May 27 11:15:05 CST 2019]; root of context hierarchy
+2019-05-27 11:15:06.639  WARN 13996 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.appchina.pay.manage]' package. Please check your configuration.
+2019-05-27 11:15:07.669  INFO 13996 --- [main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8092 (http)
+2019-05-27 11:15:07.684  INFO 13996 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-05-27 11:15:07.686  INFO 13996 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.16
+2019-05-27 11:15:07.813  INFO 13996 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-05-27 11:15:07.813  INFO 13996 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2113 ms
+2019-05-27 11:15:08.029  INFO 13996 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
+2019-05-27 11:15:08.036  INFO 13996 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-05-27 11:15:08.037  INFO 13996 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-05-27 11:15:08.038  INFO 13996 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-05-27 11:15:08.038  INFO 13996 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-05-27 11:15:08.108  WARN 13996 --- [main] ationConfigEmbeddedWebApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoController': Unsatisfied dependency expressed through field 'mchInfoService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'mchInfoService': Unsatisfied dependency expressed through field 'mchInfoMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2019-05-27 11:15:08.110  INFO 13996 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2019-05-27 11:15:08.167  INFO 13996 --- [main] utoConfigurationReportLoggingInitializer : 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2019-05-27 11:15:08.332 ERROR 13996 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field mchInfoMapper in com.appchina.pay.manage.service.MchInfoService required a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.appchina.pay.dao.mapper.MchInfoMapper' in your configuration.
+
